@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Registration.css">
+    <title>Register</title>
+</head>
+<body>
+    <div class="Basliq">
+        <img src="Media/blocks.png" class="sol" id="block">
+        <img src="Media/ada_logo_white.png" class="sol" id="logo">
+        <div class="sag">
+        <img src="Media/settings.png" id="setting">
+        <img src="Media/account.png" id="account">
+        <h1>Naməlum Şəxs</h1>
+    </div>
+    </div>
+    <hr>
+    <div id="Yollar">
+        <h2><a href="#">Student</a></h2>
+        <h3>></h3>
+        <h2><a href="#">Registration</a></h2>
+        <h3>></h3>
+        <h2><a href="#">Select a Term</a></h2>
+        <h3>></h3>
+        <h2><a href="#">Register for Classes</a></h2>
+    </div>
+    <div id="Register">
+        <h1>Register for Classes</h1>
+    </div>
+    <div id="Secimler">
+        <h4 class="First">Find Classes</h4>
+        <h4 class="Main">Enter CRNs</h4>
+        <h4>Projections</h4>
+        <h4>Schedule and Options</h4>
+    </div>
+    <div id="Corner">
+    <div id="main">
+        <h2>Enter Course Reference Numbers (CRNs) to Register</h2>
+        <p id="term">Term Spring 2025</p>
+        <div id="CRN">
+            <p>CRN</p>
+            <div id="inputs">
+            <label>
+                <input type="number" id="SALAM1" required>
+            </label>
+            </div>
+            </div>
+        <div id="add">
+            <a href="#" id="Add">+ Add Another CRN</a>
+            <button class="button-15" role="button" id="summary">Add to Summary</button>
+        </div>
+        <div id="xeberdarliq">
+            <h2 id="olmaz"></h2>
+        </div>
+    </div>
+    </div>
+</div>
+    <div id="Istiqamet1">
+        
+    </div>
+    <div id="Cedvel">
+        <div id="DersCedveli">
+            <div id="yuxari">
+            <div id="secilmis">
+            <img src="Media/[CITYPNG.COM]Download HD Calendar Date White Icon PNG - 1000x1000.png">
+                <h3>Schedule</h3>
+            </div>
+                <h3 id="detail">Schedule Details</h3>
+            </div>
+            <h1>Dərs Cədvəli önəmli deyil deyə düzəltmədim</h1>
+        </div>
+        <div id="Istiqamet">
+            
+        </div>
+        <div id="Crncedveli">
+            <div id="Summary">
+                <img src="Media/645097-200.png">
+                <h3>Summary</h3>
+            </div>
+            <table id="esascedvel">
+                <tr>
+                    <th id="title">Title</th>
+                    <th id="details">Details</th>
+                    <th id="hours">Hours</th>
+                    <th id="crn">CRN</th>
+                    <th id="schedule">Schedule Type</th>
+                    <th id="status">Status</th>
+                    <th id="action">Action</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="submit">
+        <button id="Submit" class="button-16">Submit</button>
+    </div>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+    <script>
+        var t=0;
+        window.setInterval(function count(){
+            t=t+1;
+        } , 1000)
+        const link = document.getElementById('Add');
+const container = document.getElementById('inputs');
+let j = 1;
+
+link.addEventListener('click', () => {
+    j++;
+    const newInput = document.createElement('input');
+    newInput.type = 'number';
+    newInput.setAttribute('id', `SALAM${j}`);
+    console.log(newInput.id);
+    container.appendChild(newInput);
+    if (j > 4) {
+        link.remove();
+    }
+});
+
+const buttonn = document.getElementById('summary');
+const table = document.getElementById('esascedvel');
+
+const titles = [
+    'Calculus I', 'Data & Computing Skills', 'Global Perspectives',
+    'Intro to Python Programming', 'Principles of Info. Systems',
+    'Literature of Azerbaijan', 'Music. Heritage of Azerbaijan',
+    'Public Speaking & Persuasion', 'Writing & Info Literacy I'
+];
+
+const details = [
+    'MATH 1111, 0', 'PDEV 2302, 0', 'SOCS 1102, 0',
+    'CSCI 3600, 0', 'SITE 1101, 0', 'LITR 2302, 0',
+    'HUMA 1101, 0', 'COMM 1200, 0', 'WRIT 1101, 0'
+];
+
+const hours = Array(9).fill('6');
+const statusList = Array(9).fill('Registering');
+const types = Array(9).fill('Lecture');
+
+buttonn.addEventListener('click', () => {
+    let valid = true;
+    let selectedCRNs = [];
+
+    for (let i = 1; i <= j; i++) {
+        const input = document.getElementById(`SALAM${i}`);
+        if (input && input.value.length === 5) {
+            selectedCRNs.push(input.value);
+        } else {
+            valid = false;
+            document.getElementById('olmaz').textContent = 'CRN 5 rəqəmli olur!';
+            break;
+        }
+    }
+
+    if (valid) {
+        document.getElementById('olmaz').textContent = ''; 
+        selectedCRNs.forEach((crn) => {
+            if (titles.length > 0) {
+                const rowIndex = Math.floor(Math.random() * titles.length);
+
+                const row = document.createElement('tr');
+                table.appendChild(row);
+
+                const rowContent = [
+                    titles[rowIndex], 
+                    details[rowIndex], 
+                    hours[rowIndex], 
+                    crn, 
+                    types[rowIndex], 
+                    statusList[rowIndex], 
+                    '' 
+                ];
+
+                rowContent.forEach((content, index) => {
+                    const cell = document.createElement('td');
+                    if (index === 6) {
+                        const select = document.createElement('select');
+                        const option1 = new Option('**Web Register**', 'webregister');
+                        const option2 = new Option('None', 'none');
+                        select.append(option1, option2);
+                        cell.appendChild(select);
+                    } else {
+                        cell.textContent = content;
+                    }
+                    row.appendChild(cell);
+                });
+
+                titles.splice(rowIndex, 1);
+                details.splice(rowIndex, 1);
+                hours.splice(rowIndex, 1);
+                statusList.splice(rowIndex, 1);
+                types.splice(rowIndex, 1);
+            }
+        });
+    }
+});
+const submitButton = document.getElementById('Submit');
+const loadingOverlay = document.getElementById('loading-overlay');
+
+submitButton.addEventListener('click', () => {
+    loadingOverlay.style.display = 'flex';
+    setTimeout(() => {
+    const rows = table.querySelectorAll('tr');
+
+    rows.forEach((row, index) => {
+        if (index === 0) return; 
+        const statusCell = row.cells[5]; 
+        const actionCell = row.cells[6]; 
+        const select = actionCell.querySelector('select'); 
+
+        if (statusCell && select) {
+            const selectedOption = select.value; 
+            let v = Math.floor(Math.random() * 100) + 1;
+
+            if (selectedOption === 'webregister') {
+                if (statusCell.textContent === 'Registering') {
+                    if (t < v) {
+                        statusCell.textContent = 'Registered'; 
+                        statusCell.className = 'status-registered';
+                    } else {
+                        statusCell.textContent = 'ERROR'; 
+                        statusCell.className = 'status-error';
+                        select.innerHTML = ''; 
+                        const webDropOption = new Option('**Web Drop**', 'webdrop');
+                        const noneOption = new Option('None', 'none');
+                        select.append(webDropOption, noneOption);
+                    }
+                }
+            } else if (selectedOption === 'webdrop') {
+                row.remove();
+            } 
+        }
+    });
+    loadingOverlay.style.display = 'none';
+}, 1000);
+});
+function updateRowBackgrounds() {
+            const rows = table.querySelectorAll('tr');
+
+            rows.forEach((row, index) => {
+                if (index === 0) return; 
+
+                const statusCell = row.cells[5];
+                if (statusCell) {
+                    const status = statusCell.textContent.toLowerCase();
+
+                    if (status === 'registering') {
+                        statusCell.className = 'status-registering';
+                    } else if (status === 'registered') {
+                        statusCell.className = 'status-registered';
+                    } else if (status === 'error') {
+                        statusCell.className = 'status-error';
+                    }
+                }
+            });
+        }
+</script>
+</body>
+</html>
