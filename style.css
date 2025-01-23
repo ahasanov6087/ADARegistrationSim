@@ -134,7 +134,7 @@ p:last-of-type {
         width: 80%;
     }
 }
-h1:last-of-type {
+h1#salam {
     text-align: center;
     font-size: 1.8rem;
     color: #004080;
