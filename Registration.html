@@ -136,7 +136,7 @@ const details = [
 ];
 
 const hours = Array(9).fill('6');
-const statusList = Array(9).fill('Registering');
+const statusList = Array(9).fill('Pending');
 const types = Array(9).fill('Lecture');
 
 buttonn.addEventListener('click', () => {
@@ -145,8 +145,12 @@ buttonn.addEventListener('click', () => {
 
     for (let i = 1; i <= j; i++) {
         const input = document.getElementById(`SALAM${i}`);
-        if (input && input.value.length === 5) {
+        if (input && input.value.length === 5 || input.value.length === 0) {
+            if(input.value.length === 5)
+        {
             selectedCRNs.push(input.value);
+        }
+            input.value='';
         } else {
             valid = false;
             document.getElementById('olmaz').textContent = 'CRN 5 rəqəmli olur!';
@@ -177,16 +181,19 @@ buttonn.addEventListener('click', () => {
                     const cell = document.createElement('td');
                     if (index === 6) {
                         const select = document.createElement('select');
-                        const option1 = new Option('**Web Register**', 'webregister');
-                        const option2 = new Option('None', 'none');
+                        const option1 = new Option('**Web Registered**', 'webregister');
+                        const option2 = new Option('Remove', 'remove');
                         select.append(option1, option2);
                         cell.appendChild(select);
                     } else {
                         cell.textContent = content;
+                        if(index == 5)
+                    {
+                        cell.className = 'status-registering';
+                    }
                     }
                     row.appendChild(cell);
                 });
-
                 titles.splice(rowIndex, 1);
                 details.splice(rowIndex, 1);
                 hours.splice(rowIndex, 1);
@@ -203,7 +210,6 @@ submitButton.addEventListener('click', () => {
     loadingOverlay.style.display = 'flex';
     setTimeout(() => {
     const rows = table.querySelectorAll('tr');
-
     rows.forEach((row, index) => {
         if (index === 0) return; 
         const statusCell = row.cells[5]; 
@@ -211,14 +217,18 @@ submitButton.addEventListener('click', () => {
         const select = actionCell.querySelector('select'); 
 
         if (statusCell && select) {
-            const selectedOption = select.value; 
+            const selectedOption = select.value;
             let v = Math.floor(Math.random() * 100) + 1;
 
             if (selectedOption === 'webregister') {
-                if (statusCell.textContent === 'Registering') {
+                if (statusCell.textContent === 'Pending') {
                     if (t < v) {
                         statusCell.textContent = 'Registered'; 
                         statusCell.className = 'status-registered';
+                        select.innerHTML = ''; 
+                        const webDropOption = new Option('**Web Drop**', 'webdrop');
+                        const noneOption = new Option('None', 'none');
+                        select.append(noneOption, webDropOption);
                     } else {
                         statusCell.textContent = 'ERROR'; 
                         statusCell.className = 'status-error';
@@ -228,7 +238,7 @@ submitButton.addEventListener('click', () => {
                         select.append(webDropOption, noneOption);
                     }
                 }
-            } else if (selectedOption === 'webdrop') {
+            } else if (selectedOption === 'webdrop' || selectedOption === 'remove') {
                 row.remove();
             } 
         }

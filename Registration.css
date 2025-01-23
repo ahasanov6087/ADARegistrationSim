@@ -160,7 +160,7 @@ input::-webkit-inner-spin-button {
 
 #inputs input{
     font-size: 14px;
-    width: 100px;
+    width: 170px;
 }
 #inputs{
     display: flex;
@@ -429,7 +429,6 @@ select{
     padding: 5px;
     text-align: center;
 }
-/* Loading overlay */
 #loading-overlay {
     position: absolute;
     top: 0;
@@ -442,7 +441,6 @@ select{
     align-items: center;
     justify-content: center;
 }
-/* Spinner animation */
 .spinner {
     border: 8px solid rgba(255, 255, 255, 0.2);
     border-top: 8px solid white;
